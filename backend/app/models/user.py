@@ -1,4 +1,4 @@
-from sqlalchemy import String , Boolean , DateTime
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
 from sqlalchemy.orm import Mapped , mapped_column
 from sqlalchemy.sql import func
 
@@ -19,4 +19,11 @@ class User(Base):
     created_at:Mapped[DateTime] = mapped_column(
         DateTime(timezone=True) , 
         server_default=func.now()
+    )
+    
+    role = Column(
+    String(20),
+    nullable=False,
+    default="user",
+    server_default="user"
     )

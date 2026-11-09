@@ -9,11 +9,16 @@ from app.schemas.stock import (
 )
 from app.services.stock_service import stock_service
 
+from app.api.deps import get_current_user, get_current_admin
+from app.models.user import User
+
 
 router = APIRouter(
     prefix="/stocks",
     tags=["Stocks"]
 )
+
+
 
 
 # CREATE STOCK
@@ -24,7 +29,8 @@ router = APIRouter(
 )
 def create_stock(
     stock_data: StockCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     return stock_service.create_stock(db, stock_data)
@@ -36,7 +42,8 @@ def create_stock(
     response_model=list[StockResponse]
 )
 def get_all_stocks(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     return stock_service.get_all_stocks(db)
@@ -49,7 +56,8 @@ def get_all_stocks(
 )
 def get_stock(
     stock_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     return stock_service.get_stock(db, stock_id)
@@ -63,7 +71,8 @@ def get_stock(
 def update_stock(
     stock_id: int,
     stock_data: StockUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     return stock_service.update_stock(
@@ -79,7 +88,8 @@ def update_stock(
 )
 def delete_stock(
     stock_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     return stock_service.delete_stock(db, stock_id)
