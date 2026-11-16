@@ -1,0 +1,33 @@
+
+stocks:
+  - RELIANCE
+  - TCS
+  - INFY
+  - HDFCBANK
+  - ICICIBANK
+
+training:
+  model_type: LinearRegression
+  test_size: 0.2
+  random_state: 42
+  target: target_return
+
+features:
+  - return_1d
+  - return_5d
+  - volatility_5
+  - volume_change
+  - open_ratio
+  - high_ratio
+  - low_ratio
+  - sma5_ratio
+  - sma10_ratio
+  - ema20_ratio
+  - rsi_14
+  - macd
+  - macd_histogram
+  - momentum_10
+  - bb_position
+
+mlflow:
+  experiment_name: FinSightAI-MultiStock-Prediction

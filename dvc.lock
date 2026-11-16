@@ -1,0 +1,72 @@
+schema: '2.0'
+stages:
+  train_models:
+    cmd: python -m app.ml.training.train_all_models
+    deps:
+    - path: app/ml/data/clean_data.py
+      hash: md5
+      md5: 12de482ec9f5bbe215a1fc355217434d
+      size: 965
+    - path: app/ml/data/prepare_dataset.py
+      hash: md5
+      md5: 50e79a5f1ed0b92d28c27ef98c1f2e6b
+      size: 2996
+    - path: app/ml/data/prepare_dvc_dataset.py
+      hash: md5
+      md5: 1b41822f774fa9614a3eef658798f808
+      size: 2712
+    - path: app/ml/data/prepare_dvc_split.py
+      hash: md5
+      md5: 7ac25cff3ce19b110ebe991255da1cfe
+      size: 2506
+    - path: app/ml/features/build_features.py
+      hash: md5
+      md5: 0cf5d9e2e474eac55961d14f30fe3d77
+      size: 3440
+    - path: app/ml/models/model_registry.py
+      hash: md5
+      md5: c46397b0db7ee379aef4294735a20609
+      size: 916
+    - path: app/ml/training/train_all_models.py
+      hash: md5
+      md5: 7e53bb2b903fd5f4b3d06217b180585a
+      size: 4885
+    - path: data/raw/stock_prices.csv
+      hash: md5
+      md5: 4af176030b354f08d6910cd99785751f
+      size: 137874
+    params:
+      ../params.yaml:
+        mlflow.experiment_name: FinSightAI-MultiStock-Prediction
+        stocks:
+        - RELIANCE
+        - TCS
+        - INFY
+        - HDFCBANK
+        - ICICIBANK
+        training:
+          model_type: LinearRegression
+          test_size: 0.2
+          random_state: 42
+          target: target_return
+    outs:
+    - path: app/ml/artifacts/hdfcbank_return_v1.joblib
+      hash: md5
+      md5: 6be6906ee6f3d14efebbb389209ad5a2
+      size: 1295
+    - path: app/ml/artifacts/icicibank_return_v1.joblib
+      hash: md5
+      md5: b06645dee3378514f043a9c58dc6eeeb
+      size: 1295
+    - path: app/ml/artifacts/infy_return_v1.joblib
+      hash: md5
+      md5: 11f1037a4ad6a3fdb66dd00de1d51491
+      size: 1295
+    - path: app/ml/artifacts/reliance_return_v1.joblib
+      hash: md5
+      md5: 787f6716dfdc7c8e5805d4befd9ccae4
+      size: 1295
+    - path: app/ml/artifacts/tcs_return_v1.joblib
+      hash: md5
+      md5: 9684ce8f4248f2b5b69e56e2b84ccc73
+      size: 1295

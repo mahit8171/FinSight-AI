@@ -1,0 +1,25 @@
+
+stages:
+  train_models:
+    cmd: python -m app.ml.training.train_all_models
+    wdir: backend
+    deps:
+      - data/raw/stock_prices.csv
+      - app/ml/training/train_all_models.py
+      - app/ml/data/prepare_dvc_dataset.py
+      - app/ml/data/prepare_dvc_split.py
+      - app/ml/data/clean_data.py
+      - app/ml/features/build_features.py
+      - app/ml/data/prepare_dataset.py
+      - app/ml/models/model_registry.py
+    params:
+      - ../params.yaml:
+          - stocks
+          - training
+          - mlflow.experiment_name
+    outs:
+      - app/ml/artifacts/hdfcbank_return_v1.joblib
+      - app/ml/artifacts/icicibank_return_v1.joblib
+      - app/ml/artifacts/infy_return_v1.joblib
+      - app/ml/artifacts/reliance_return_v1.joblib
+      - app/ml/artifacts/tcs_return_v1.joblib

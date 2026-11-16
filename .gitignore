@@ -28,3 +28,13 @@ data/
 # OS
 .DS_Store
 Thumbs.db
+# DVC metadata exceptions
+!backend/data/
+!backend/data/raw/
+!backend/data/raw/*.dvc
+
+# MLflow local database
+mlflow.db*
+
+# Sensitive credentials
+/backend/pass.txt
