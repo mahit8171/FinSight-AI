@@ -3,7 +3,10 @@ import numpy as np
 import pandas as pd
 
 
-def build_features(df: pd.DataFrame) -> pd.DataFrame:
+def build_features(
+    df: pd.DataFrame,
+    include_target: bool = True
+) -> pd.DataFrame:
     """
     Build technical and relative price features for stock prediction.
     Input must contain one stock's chronological historical data.
@@ -124,8 +127,10 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
     df["ema20_ratio"] = df["ema_20"] / df["close"]
 
     # Next trading day's target
-    df["target_date"] = df["date"].shift(-1)
-    df["target"] = df["close"].shift(-1)
+    # Next trading day's target (training only)
+    if include_target:
+        df["target_date"] = df["date"].shift(-1)
+        df["target"] = df["close"].shift(-1)
 
     # Replace infinite values
     df = df.replace([np.inf, -np.inf], np.nan)
@@ -136,7 +141,16 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
         errors="coerce"
     )
 
+   
     # Remove invalid rows
-    df = df.dropna().reset_index(drop=True)
+    if include_target:
+        df = df.dropna().reset_index(drop=True)
+
+    else:
+        from app.ml.data.prepare_dataset import FEATURE_COLUMNS
+
+        df = df.dropna(
+            subset=FEATURE_COLUMNS
+        ).reset_index(drop=True)
 
     return df

@@ -38,3 +38,6 @@ mlflow.db*
 
 # Sensitive credentials
 /backend/pass.txt
+
+# Application logs
+/logs/

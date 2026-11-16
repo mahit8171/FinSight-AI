@@ -15,7 +15,9 @@ from app.api.v1.endpoints import (
     watchlist_items,
     dashboard,
     market_overview,
-    stock_search
+    stock_search,
+    predictions,
+    ml_predictions,  
 )
 
 
@@ -72,4 +74,14 @@ api_router.include_router(
     stock_search.router,
     prefix="/stocks/search",
     tags=["Stock Search"]
+)
+
+
+api_router.include_router(
+    predictions.router
+)
+
+
+api_router.include_router(
+    ml_predictions.router
 )
