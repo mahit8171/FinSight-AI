@@ -21,8 +21,8 @@ stages:
       size: 2506
     - path: app/ml/features/build_features.py
       hash: md5
-      md5: 0cf5d9e2e474eac55961d14f30fe3d77
-      size: 3440
+      md5: 8bd800d673b5c2f54802092a402e9f07
+      size: 3769
     - path: app/ml/models/model_registry.py
       hash: md5
       md5: c46397b0db7ee379aef4294735a20609
