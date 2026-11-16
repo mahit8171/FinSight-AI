@@ -1,3 +1,6 @@
+from pathlib import Path
+from typing import ClassVar
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,13 +18,15 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5434
-    
+
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
+    BASE_DIR: ClassVar[Path] = Path(__file__).resolve().parents[3]
+
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=BASE_DIR / ".env",
         extra="ignore"
     )
 

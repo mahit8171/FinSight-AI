@@ -1,12 +1,16 @@
+
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db
+from app.api.deps import get_current_admin
+
 from app.schemas.user import (
     UserCreate,
     UserUpdate,
     UserResponse
 )
+
 from app.services.user_service import user_service
 
 
@@ -24,9 +28,9 @@ router = APIRouter(
 )
 def create_user(
     user_data: UserCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin)
 ):
-
     return user_service.create_user(db, user_data)
 
 
@@ -36,9 +40,9 @@ def create_user(
     response_model=list[UserResponse]
 )
 def get_all_users(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin)
 ):
-
     return user_service.get_all_users(db)
 
 
@@ -49,9 +53,9 @@ def get_all_users(
 )
 def get_user(
     user_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin)
 ):
-
     return user_service.get_user(db, user_id)
 
 
@@ -63,9 +67,9 @@ def get_user(
 def update_user(
     user_id: int,
     user_data: UserUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin)
 ):
-
     return user_service.update_user(
         db,
         user_id,
@@ -77,7 +81,7 @@ def update_user(
 @router.delete("/{user_id}")
 def delete_user(
     user_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin)
 ):
-
     return user_service.delete_user(db, user_id)

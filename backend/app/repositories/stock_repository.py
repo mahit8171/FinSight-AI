@@ -35,4 +35,18 @@ class StockRepository:
         db.commit()
         return True
     
+    def search(self, db: Session, query: str, limit: int = 10):
+        search_term = f"%{query.strip()}%"
+
+        return (
+            db.query(Stock)
+            .filter(
+                (Stock.symbol.ilike(search_term)) |
+                (Stock.company_name.ilike(search_term))
+            )
+            .order_by(Stock.symbol.asc())
+            .limit(limit)
+            .all()
+        )
+    
 stock_repository = StockRepository()
