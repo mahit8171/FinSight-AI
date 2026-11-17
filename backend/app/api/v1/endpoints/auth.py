@@ -8,6 +8,7 @@ from app.services.user_service import user_service
 from app.api.deps import get_current_user
 from app.schemas.user import UserResponse
 from app.models.user import User
+from app.schemas.user import UserCreate, UserResponse
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -29,3 +30,20 @@ def get_me(
     current_user: User = Depends(get_current_user)
 ):
     return current_user
+
+
+
+@router.post(
+    "/register",
+    response_model=UserResponse,
+    status_code=201
+)
+def register(
+    user_data: UserCreate,
+    db: Session = Depends(get_db)
+):
+    return user_service.create_user(
+        db=db,
+        user_data=user_data
+    )
+
